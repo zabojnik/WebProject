@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const cityInput = document.getElementById('city-input');
     const weatherResult = document.getElementById('weather-result');
     const weatherIcon = document.getElementById('weather-icon');
-    const weatherDetails = document.getElementById('weather-details');
     const pressure = document.getElementById('pressure');
     const visibility = document.getElementById('visibility');
     const uvIndex = document.getElementById('uv-index');
@@ -23,25 +22,20 @@ document.addEventListener('DOMContentLoaded', () => {
             weatherResult.innerHTML = `<p>City not found</p>`;
             forecastResult.innerHTML = '';
             weatherIcon.classList.add('hidden');
-            weatherDetails.classList.add('hidden');
         } else {
             weatherResult.innerHTML = `
                 <h3>${data.name}</h3>
+				<img id="weather-icon" src="http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png" alt="Weather icon">
                 <p>${data.weather[0].description}</p>
                 <p>Temperature: ${data.main.temp}°C</p>
                 <p>Humidity: ${data.main.humidity}%</p>
                 <p>Wind speed: ${data.wind.speed} m/s</p>
+				<p>Pressure: ${data.main.pressure} hPa</p>
+                <p>Visibility: ${data.visibility || 'N/A'} meters</p>
+                <p>UV Index: ${data.uvi || 'N/A'}</p>
             `;
-            weatherIcon.src = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
-            weatherIcon.classList.remove('hidden');
-
-            pressure.innerHTML = `Pressure: ${data.main.pressure} hPa`;
-            visibility.innerHTML = `Visibility: ${data.visibility} meters`;
-            uvIndex.innerHTML = `UV Index: ${data.uvi || 'N/A'}`;
-            weatherDetails.classList.remove('hidden');
 
             addFavoriteButton.onclick = () => addFavorite(data.name);
-            saveHistory(data.name);
         }
     };
 	
@@ -50,8 +44,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const city = cityInput.value;
         const weatherData = await getWeather(city);
         displayWeather(weatherData);
-        const forecastData = await getForecast(city);
-        displayForecast(forecastData);
     });
 	
 	    window.addFavorite = (city) => {
