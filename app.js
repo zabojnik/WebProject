@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const pressure = document.getElementById('pressure');
     const visibility = document.getElementById('visibility');
     const uvIndex = document.getElementById('uv-index');
+    const addFavoriteButton = document.getElementById('add-favorite');
+    const favoritesList = document.getElementById('favorites-list');
 
     const apiKey = 'ebcda15349a2ff963f2be8e8cd6cd0a9';
 
@@ -51,5 +53,37 @@ document.addEventListener('DOMContentLoaded', () => {
         const forecastData = await getForecast(city);
         displayForecast(forecastData);
     });
+	
+	    window.addFavorite = (city) => {
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        if (!favorites.includes(city)) {
+            favorites.push(city);
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            displayFavorites();
+        }
+    };
+
+    window.deleteFavorite = (city) => {
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        favorites = favorites.filter(fav => fav !== city);
+        localStorage.setItem('favorites', JSON.stringify(favorites));
+        displayFavorites();
+    };
+
+    const displayFavorites = () => {
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        favoritesList.innerHTML = '';
+        favorites.forEach(city => {
+            let li = document.createElement('li');
+            li.innerHTML = `${city} <button class="delete-btn" onclick="deleteFavorite('${city}')">x</button>`;
+            li.onclick = () => {
+                cityInput.value = city;
+                weatherForm.dispatchEvent(new Event('submit'));
+            };
+            favoritesList.appendChild(li);
+        });
+    };
+	
+	displayFavorites();
 	
 });

@@ -46,3 +46,16 @@ button:hover {
     margin-top: 20px;
     text-align: center;
 }
+
+#favorites-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+#favorites-list li {
+    padding: 5px 0;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

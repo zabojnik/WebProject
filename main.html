@@ -3,18 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pocasi</title>
+    <title>Weather</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 	<div id="app">
-        <h1>Pocasi Aplikace</h1>
+        <h1>Weather app</h1>
 		<form id="weather-form">
-            <input type="text" id="city-input" placeholder="Zadejte město" required>
-            <button type="submit">Získat počasí</button>
+            <input type="text" id="city-input" placeholder="Enter city" required>
+            <button type="submit">Get Weather</button>
         </form>
-	</div>
-	<div id="weather-result">
+		<div id="weather-result">
+	
+		</div>
+        <button id="add-favorite">Add to Favorites</button>
+        <div id="forecast-result"></div>
+        <h2>Favorites</h2>
+        <ul id="favorites-list"></ul>
+    </div>
     
 	<script src="app.js"></script>
 </body>
