@@ -85,3 +85,18 @@ button:hover {
     cursor: pointer;
 	margin-left: 10px;
 }
+
+#forecast-result {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.forecast-day {
+    flex: 1 1 120px;
+    margin: 10px;
+    padding: 10px;
+    background-color: #fffff0;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}

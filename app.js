@@ -8,11 +8,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const uvIndex = document.getElementById('uv-index');
     const addFavoriteButton = document.getElementById('add-favorite');
     const favoritesList = document.getElementById('favorites-list');
+	const forecastResult = document.getElementById('forecast-result');
 
     const apiKey = 'ebcda15349a2ff963f2be8e8cd6cd0a9';
 
     const getWeather = async (city) => {
         const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`);
+        const data = await response.json();
+        return data;
+    };
+	
+	const getForecast = async (city) => {
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`);
         const data = await response.json();
         return data;
     };
@@ -39,11 +46,33 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 	
+	const displayForecast = (data) => {
+        if (data.cod === "404") {
+            forecastResult.innerHTML = '';
+        } else {
+            let forecastHTML = '';
+            for (let i = 0; i < data.list.length; i += 8) {
+                const forecast = data.list[i];
+                forecastHTML += `
+                    <div class="forecast-day">
+                        <p>${new Date(forecast.dt * 1000).toLocaleDateString()}</p>
+                        <p>${forecast.weather[0].description}</p>
+                        <p>Temp: ${forecast.main.temp}°C</p>
+                        <img src="http://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png" alt="Weather icon">
+                    </div>
+                `;
+            }
+            forecastResult.innerHTML = forecastHTML;
+        }
+    };
+	
 	weatherForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const city = cityInput.value;
         const weatherData = await getWeather(city);
         displayWeather(weatherData);
+		const forecastData = await getForecast(city);
+        displayForecast(forecastData);
     });
 	
 	    window.addFavorite = (city) => {
