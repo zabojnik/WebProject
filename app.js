@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const visibility = document.getElementById('visibility');
     const uvIndex = document.getElementById('uv-index');
 
-    const apiKey = 'ebcda15349a2ff963f2be8e8cd0a9';
+    const apiKey = 'ebcda15349a2ff963f2be8e8cd6cd0a9';
 
     const getWeather = async (city) => {
         const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`);
